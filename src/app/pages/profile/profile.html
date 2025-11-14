@@ -1,0 +1,131 @@
+<div class="profile">
+  <img class="profile__bg" src="/assets/profile-bg.svg" alt="" />
+  <div class="container">
+    <div class="title">Профиль</div>
+    <div class="role-switcher">
+      <button
+        class="role-btn"
+        [class.active]="currentRole === 'volunteer'"
+        (click)="switchRole('volunteer')"
+      >
+        Волонтер
+      </button>
+      <button
+        class="role-btn"
+        [class.active]="currentRole === 'organizer'"
+        (click)="switchRole('organizer')"
+      >
+        Организатор
+      </button>
+    </div>
+    <div class="profile__top">
+      <div class="profile__avatar">
+        <img src="/assets/mock-avatar.webp" alt="" />
+      </div>
+      <div class="profile__star">
+        <img src="assets/icons/star.png" alt="" /> 4,6
+      </div>
+      <div class="title profile__name">
+        {{ currentRole === 'volunteer' ? 'Волонтер' : 'Организатор' }}
+      </div>
+      <a class="profile__max"
+        >{{ currentRole === 'volunteer' ? '@volunteer' : '@organizer' }}</a
+      >
+    </div>
+
+    <div class="block profile__block">
+      <div class="profile__item">
+        <img src="/assets/icons/date.svg" alt="" />
+        <div class="profile__text">
+          <div class="profile__title">Аккаунт создан</div>
+          <div class="profile__info">28.08.2022</div>
+        </div>
+      </div>
+      <div class="profile__item">
+        <img src="/assets/icons/star.png" alt="" />
+        <div class="profile__text">
+          <div class="profile__title">Вас оцениили</div>
+          <div class="profile__info">15 людей</div>
+        </div>
+      </div>
+    </div>
+    <div class="block profile__block">
+      <div class="profile__item">
+        <img src="/assets/icons/human.png" alt="" />
+        <div class="profile__text">
+          <div class="profile__title">Был участником</div>
+          <div class="profile__info">101 раз</div>
+        </div>
+      </div>
+      <div class="profile__item">
+        <img src="/assets/icons/people.png" alt="" />
+        <div class="profile__text">
+          <div class="profile__title">Был организатором</div>
+          <div class="profile__info">10 раз</div>
+        </div>
+      </div>
+    </div>
+    <div class="profile__comment">
+      <div class="comment__title">Комментарии:</div>
+      <div class="comment">
+        <div class="block comment__block">
+          <div class="comment__top">
+            <div class="comment__name">Айназ</div>
+            <div class="comment__star">
+              <img src="assets/icons/star.png" alt="" />
+              3,6
+            </div>
+          </div>
+          <div class="comment__text">
+            Все прошло хорошо, быстро и качественно
+          </div>
+        </div>
+      </div>
+      <div class="comment">
+        <div class="block comment__block">
+          <div class="comment__top">
+            <div class="comment__name">Даня</div>
+            <div class="comment__star">
+              <img src="assets/icons/star.png" alt="" />
+              4,8
+            </div>
+          </div>
+          <div class="comment__text">
+            Отлично провели время а главное полезно, жаль что не все успели
+            убрать
+          </div>
+        </div>
+      </div>
+      <div class="comment">
+        <div class="block comment__block">
+          <div class="comment__top">
+            <div class="comment__name">Айназ</div>
+            <div class="comment__star">
+              <img src="assets/icons/star.png" alt="" />
+              3,6
+            </div>
+          </div>
+          <div class="comment__text">
+            Все прошло хорошо, быстро и качественно
+          </div>
+        </div>
+      </div>
+      <div class="comment">
+        <div class="block comment__block">
+          <div class="comment__top">
+            <div class="comment__name">Даня</div>
+            <div class="comment__star">
+              <img src="assets/icons/star.png" alt="" />
+              4,8
+            </div>
+          </div>
+          <div class="comment__text">
+            Отлично провели время а главное полезно, жаль что не все успели
+            убрать
+          </div>
+        </div>
+      </div>
+    </div>
+    <app-navigation></app-navigation>
+  </div>
+</div>

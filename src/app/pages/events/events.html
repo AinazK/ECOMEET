@@ -1,0 +1,116 @@
+<div class="events">
+  <div class="container">
+    <div class="title title__blue">Волонтерские акции</div>
+    <div class="input__img">
+      <div class="block input__block">
+        <input
+          type="text"
+          placeholder="Найди свой город"
+          [(ngModel)]="searchText"
+          (input)="filterEvents()"
+        />
+        <div class="input__search">
+          <img src="assets/icons/search.svg" alt="" />
+        </div>
+      </div>
+    </div>
+    <div class="block event__block" *ngFor="let event of events">
+      <div class="event__top">
+        <div class="events__name">{{ event.name }}</div>
+        <div class="events__img" [class.rotated]="event.isOpen">
+          <img src="/assets/icons/arrow.svg" alt="" />
+        </div>
+      </div>
+
+      <div class="event__info" (click)="toggleArrow(event)">
+        <div class="event__item">
+          <div class="event__icon">
+            <img src="/assets/block/adress.svg" alt="" />
+          </div>
+          <div>{{ event.location }}</div>
+        </div>
+
+        <div class="event__item__2">
+          <div class="event__item">
+            <div class="event__icon">
+              <img src="/assets/block/time.svg" alt="" />
+            </div>
+            <div>Дата: {{ event.date }}</div>
+          </div>
+
+          <div class="event__item" *ngIf="event.isOpen">
+            <div class="event__icon">
+              <img src="/assets/block/time.svg" alt="" />
+            </div>
+            <div>Время {{ event.time }}</div>
+          </div>
+
+          <div class="event__item" *ngIf="!event.isOpen">
+            <div class="event__icon">
+              <img src="/assets/block/people.svg" alt="" />
+            </div>
+            <div>{{ event.volunteers }} волонтеров</div>
+          </div>
+        </div>
+
+        <div class="event__item" *ngIf="event.isOpen">
+          <div class="event__icon">
+            <img src="/assets/block/people.svg" alt="" />
+          </div>
+          <div>{{ event.volunteers }} волонтеров уже откликнулось</div>
+        </div>
+
+        <div class="event__item" *ngIf="event.isOpen">
+          <div class="event__icon">
+            <img src="/assets/block/rubles.svg" alt="" />
+          </div>
+          <div>
+            Сбор средств: {{ event.currentAmount }} руб. из {{ event.goalAmount
+            }} руб. Пожертвовать.(ссылка)
+          </div>
+        </div>
+
+        <div>
+          <div class="event__donation" *ngIf="!event.isOpen">
+            Собрано {{ event.currentAmount }}/{{ event.goalAmount }} руб.
+          </div>
+          <div class="event__progressbar">
+            <div
+              class="event__progressbar-fill"
+              [style.width.%]="progress(event)"
+            ></div>
+          </div>
+        </div>
+
+        <div class="event__item" *ngIf="event.isOpen">
+          <div class="event__icon">
+            <img src="/assets/block/description.svg" alt="" />
+          </div>
+          <div>Описание: {{ event.description }}</div>
+        </div>
+
+        <div class="event__item" *ngIf="event.isOpen">
+          <div class="event__icon">
+            <img src="/assets/block/org.svg" alt="" />
+          </div>
+          <div>Организатор: <a href="">{{ event.organizer }}</a></div>
+        </div>
+      </div>
+      <div
+        class="event__button"
+        *ngIf="event.isOpen && role === 'volunteer'"
+        [class.disabled]="isUserInEvent(event)"
+        (click)="!isUserInEvent(event) && participateEvent(event)"
+      >
+        {{ isUserInEvent(event) ? 'Уже участвую' : 'Буду участвовать!' }}
+      </div>
+      <div
+        class="event__button"
+        *ngIf="role === 'organizer' && event.organizerId === 1"
+      >
+        Моё мероприятие
+      </div>
+    </div>
+    <app-navigation></app-navigation>
+  </div>
+</div>

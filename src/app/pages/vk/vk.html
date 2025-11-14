@@ -1,0 +1,53 @@
+<div class="vk">
+  <div class="container">
+    <div class="title title__blue">VK Добро</div>
+
+    <div class="block event__block block__margin" *ngFor="let vk of vkEvents">
+      <div (click)="toggleArrow(vk)">
+        <div class="event__top">
+          <div class="events__name" [innerHTML]="vk.name"></div>
+          <div class="events__img" [class.rotated]="vk.isOpen">
+            <img src="/assets/icons/arrow.svg" alt="" />
+          </div>
+        </div>
+
+        <div class="event__item">
+          <div><span class="event__span">Что сделаем:</span> {{vk.do}}</div>
+        </div>
+
+        <div>
+          <div class="event__donation">
+            Собрано {{ vk.currentAmount }} / {{ vk.goalAmount }} руб.
+          </div>
+          <div class="event__progressbar">
+            <div
+              class="event__progressbar-fill"
+              [style.width.%]="progress(vk)"
+            ></div>
+          </div>
+        </div>
+
+        <div class="event__item" *ngIf="vk.isOpen">
+          <div>
+            <span class="event__span">Описание: </span>{{ vk.descriptions }}
+          </div>
+        </div>
+
+        <div class="event__photo" *ngIf="vk.isOpen">
+          <div class="event__jpg" *ngFor="let jpg of vk.photo">
+            <img [src]="'assets/vk/' + jpg + '.jpg'" alt="" />
+          </div>
+        </div>
+        <div class="event__item">
+          <div class="event__icon">
+            <img src="/assets/block/description.svg" alt="" />
+          </div>
+          <a href="{{vk.url}}" class="events__url">Перейти в VK Добро</a>
+        </div>
+      </div>
+    </div>
+    <div class="vk__bottom"></div>
+
+    <app-navigation></app-navigation>
+  </div>
+</div>
