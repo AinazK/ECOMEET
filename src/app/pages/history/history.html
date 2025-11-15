@@ -172,6 +172,7 @@
           <div class="block__stars">
             <img
               *ngFor="let star of [].constructor(5); let i = index"
+              (click)="setRating(event, v, i + 1)"
               [src]="i < v.rating ? 'assets/icons/miniStarFull.svg' : 'assets/icons/miniStarEmpty.svg'"
               alt="*"
               class="star"
@@ -273,6 +274,11 @@
             <img src="/assets/block/org.svg" alt="" />
           </div>
           <div>Организатор: <a href="">{{ event.organizer }}</a></div>
+        </div>
+        <div class="event__photo" *ngIf="event.isOpen">
+          <div class="event__jpg" *ngFor="let jpg of event.photo">
+            <img [src]="'assets/vk/' + jpg + '.jpg'" alt="" />
+          </div>
         </div>
       </div>
     </div>

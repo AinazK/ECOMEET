@@ -27,6 +27,10 @@ interface Event {
   volunteerList?: Volunteer[];
 }
 
+interface HistoryEvent extends Event {
+  photo: string[];
+}
+
 @Component({
   selector: 'app-history',
   imports: [CommonModule, Navigation, FormsModule],
@@ -38,20 +42,67 @@ export class History {
   showNewEventForm = false;
   newEvent: Partial<Event> = {};
   events: Event[] = [];
-  historyEvents: Event[] = [
+  historyEvents: HistoryEvent[] = [
     {
-      id: 100,
-      name: 'Убраться в парке',
-      location: 'Казань Парк Горького',
+      id: 101,
+      name: 'Уборка городского парка',
+      location: 'Казань, Парк Горького',
       date: '05.11.2025',
       time: '12:00',
-      volunteers: 13,
-      currentAmount: 1000,
-      goalAmount: 1000,
-      description: 'Посадим деревья. Собираем на саженцы и удобрение.',
-      organizer: 'Данис',
+      volunteers: 15,
+      currentAmount: 1500,
+      goalAmount: 1500,
+      description:
+        'Очистили территории парка, убрали листья и мусор, посадили цветы.',
+      organizer: 'Мария',
       isOpen: false,
-    },
+      photo: ['3.1', '3.2', '3.3'],
+    } as any,
+    {
+      id: 102,
+      name: 'Сбор макулатуры в школах',
+      location: 'Казань, Школа №179',
+      date: '08.11.2025',
+      time: '10:00',
+      volunteers: 10,
+      currentAmount: 1200,
+      goalAmount: 1200,
+      description:
+        'Провели экологическую акцию по сбору макулатуры среди учеников.',
+      organizer: 'Алексей',
+      isOpen: false,
+      photo: ['2.1', '2.2', '2.3'],
+    } as any,
+    {
+      id: 103,
+      name: 'Помощь приюту для животных',
+      location: 'Казань, Приют "Дари Добро"',
+      date: '12.11.2025',
+      time: '09:00',
+      volunteers: 8,
+      currentAmount: 2000,
+      goalAmount: 2000,
+      description:
+        'Чистка вольеров, кормление и выгул животных, сортировка подарков для приюта.',
+      organizer: 'Вероника',
+      isOpen: false,
+      photo: ['3.1', '3.2', '3.3'],
+    } as any,
+    {
+      id: 104,
+      name: 'Посадка деревьев вдоль набережной',
+      location: 'Казань, Набережная',
+      date: '14.11.2025',
+      time: '11:00',
+      volunteers: 12,
+      currentAmount: 1800,
+      goalAmount: 1800,
+      description:
+        'Высадили молодые деревья, подготовили почву, установили подпорки.',
+      organizer: 'Дамир',
+      isOpen: false,
+      photo: ['1.1', '1.2', '1.3'],
+    } as any,
   ];
 
   constructor(private roleService: RoleService, private ecoEvent: EcoEvent) {
@@ -69,7 +120,12 @@ export class History {
   loadEvents(id: number) {
     this.ecoEvent.getEventById(id).subscribe({
       next: (eventArray) => {
-        this.events = eventArray.map((e) => ({
+        const filteredEvents =
+          this.role === 'organizer'
+            ? eventArray.filter((e) => e.organizerId === 1)
+            : eventArray;
+
+        this.events = filteredEvents.map((e) => ({
           ...e,
           isOpen: false,
           organizer: e.organizerName,
@@ -107,7 +163,6 @@ export class History {
     return (event.currentAmount / event.goalAmount) * 100;
   }
 
-  // (click)="setRating(event, v, i + 1)"
   setRating(event: Event, volunteer: Volunteer, newRating: number) {
     volunteer.rating = newRating;
   }

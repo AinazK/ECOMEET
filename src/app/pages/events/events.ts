@@ -90,16 +90,27 @@ export class Events {
   participateEvent(event: Event) {
     if (!event.organizerId) return;
 
+    const currentUserId = 1;
+
     this.ecoEvent
       .participateEventById({
         id_event: event.id,
-        id_user: 1,
+        id_user: currentUserId,
       })
       .subscribe({
         next: (res) => {
           console.log('Участие отправлено', res);
-          // Можно добавить обновление интерфейса, например увеличить счётчик участников
-          event.volunteers += 1;
+
+          // Добавляем текущего пользователя в список волонтёров
+          event.volunteerList = event.volunteerList || [];
+          if (!event.volunteerList.some((v) => v.id_user === currentUserId)) {
+            event.volunteerList.push({
+              id_user: currentUserId,
+              name_user: 'Вы',
+              rating: 5,
+            });
+            event.volunteers += 1; // увеличиваем счётчик участников
+          }
         },
         error: (err) => console.error('Ошибка при участии:', err),
       });
